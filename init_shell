@@ -1,0 +1,12 @@
+gen_stella_aliases() {
+  local bdir
+  local i
+  local fname
+  bdir="$(dirname "$BASH_SOURCE")"
+  for i in $bdir/scripts/*; do
+    fname="$(basename $i)"
+    echo "alias $fname=$i"
+  done
+}
+
+eval "$(gen_stella_aliases)"

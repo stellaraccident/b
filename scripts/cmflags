@@ -1,0 +1,25 @@
+#!/bin/bash
+
+for label in "$@"; do
+  case "$label" in
+    clang)
+      echo -n "-DCMAKE_TOOLCHAIN_FILE='$(dirname $0)/../etc/clang_zoom_toolchain.cmake' "
+      ;;
+    ccache)
+      echo -n "-DCMAKE_C_COMPILER_LAUNCHER=ccache "
+      echo -n "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache "
+      ;;
+    mlir)
+      echo -n "-DLLVM_ENABLE_PROJECTS=mlir "
+      echo -n "-DCMAKE_BUILD_TYPE=RelWithDebInfo "
+      echo -n "-DLLVM_ENABLE_ASSERTIONS=ON "
+      echo -n "-DLLVM_TARGETS_TO_BUILD=Native "
+      ;;
+    *)
+      echo "Error: unknown option: $label" 1>&2
+      exit 1
+      ;;
+  esac
+done
+
+echo ""
